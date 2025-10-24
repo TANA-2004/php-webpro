@@ -1,0 +1,135 @@
+nav {
+  transition: all 0.3s ease-in-out;
+}
+nav:hover {
+  box-shadow: 0 6px 25px rgba(0, 0, 0, 0.08);
+}
+
+/* ปรับตัวอักษร */
+nav a {
+  font-family: 'Prompt', sans-serif;
+  letter-spacing: 0.3px;
+  transition: color 0.2s ease, background 0.2s ease;
+}
+
+/* เมนูหลัก */
+nav .text-slate-800:hover {
+  color: #312e81; /* Indigo-900 */
+}
+
+/* ปุ่ม */
+nav a.rounded-full {
+  font-weight: 500;
+}
+
+/* เอฟเฟกต์ hover ปุ่ม */
+nav a.bg-indigo-900:hover {
+  background-color: #3730a3;
+}
+nav a.bg-slate-100:hover {
+  background-color: #e2e8f0;
+}
+
+/* ===== Navbar Capsule ===== */
+nav .bg-white\/95{
+  background: rgba(255,255,255,.96);
+  -webkit-backdrop-filter: blur(16px);
+  /* Chromium/Firefox ที่รองรับ */
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(0,0,0,.04);
+  border-radius: 22px;                 /* มนพอดี */
+  box-shadow: 0 10px 32px rgba(0,0,0,.06);
+  overflow: hidden;
+}
+
+/* โลโก้+ชื่อให้ชิดเส้นฐานเดียวกัน */
+nav img.h-8 { vertical-align: middle; }
+
+/* 🔹 Mobile Menu Box (ลบกรอบซ้อน) */
+el-disclosure#mobile-menu .grid {
+  background-color: #fff;
+  border: none;                   /* ❌ ลบเส้นขอบทั้งหมด */
+  border-radius: 1rem;            /* ✅ มุมมนสวยเหมือนเดิม */
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08); /* ✅ เงานุ่มแทนเส้นขอบ */
+  padding: 1.25rem;
+  overflow: hidden;
+}
+
+/* ปุ่มและเมนูภายในเหมือนเดิม */
+el-disclosure#mobile-menu a {
+  border-radius: 0.75rem;
+  font-weight: 500;
+  text-align: center;
+  color: #1e1b4b;
+  transition: all 0.2s ease;
+}
+el-disclosure#mobile-menu a:hover {
+  background: #f3f4f6;
+}
+
+/* เส้นคั่น */
+el-disclosure#mobile-menu .h-px{
+  background:#e5e7eb;
+  margin: 10px 0 8px;
+}
+
+/* ปุ่มล่างสองปุ่ม */
+el-disclosure#mobile-menu a.bg-slate-100{
+  background:#e9eff6;                  /* โทนอ่อน */
+  color:#0f172a;
+  padding: 12px 16px;
+  border-radius: 14px;
+}
+el-disclosure#mobile-menu a.bg-slate-100:hover{
+  background:#dde7f5;
+}
+el-disclosure#mobile-menu a.bg-indigo-900{
+  background:#17174a;                  /* สีเข้มแบบรูป */
+  color:#fff;
+  padding: 14px 16px;
+  border-radius:14px;
+  box-shadow: inset 0 -2px 0 rgba(255,255,255,.12);
+}
+el-disclosure#mobile-menu a.bg-indigo-900:hover{
+  background:#22226a;
+}
+
+/* เงาซ้อนการ์ด (ให้ฟุ้งเหมือนในรูป) */
+el-disclosure#mobile-menu .grid::before{
+  content:"";
+  position:absolute; inset:-8px -12px auto -12px;
+  height:24px; border-radius:16px;
+  filter: blur(18px);
+  background: rgba(0,0,0,.06);
+  z-index:-1;
+}
+
+/* ระยะขอบการ์ดจากขอบแคปซูล */
+@media (min-width: 768px){
+  el-disclosure#mobile-menu .px-4 { padding-left: 1.25rem; padding-right:1.25rem; }
+}
+
+/* แอนิเมชันเลื่อนลงนิ่ม */
+el-disclosure#mobile-menu{ animation: fadeSlide .25s ease-out both; }
+@keyframes fadeSlide{ from{opacity:0; transform:translateY(-8px)} to{opacity:1; transform:translateY(0)} }
+
+
+/* ส่วน Hero */
+.hero h1 {
+  font-family: 'Prompt', sans-serif;
+  font-weight: 700;
+}
+
+/* Footer */
+footer {
+  font-family: 'Prompt', sans-serif;
+}
+.hero {
+  margin-top: 4rem;     /* ระยะห่างจาก navbar */
+  padding-top: 2rem;    /* ระยะห่างด้านใน */
+  transition: all 0.4s ease;
+}
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
