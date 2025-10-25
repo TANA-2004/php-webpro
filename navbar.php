@@ -1,5 +1,4 @@
 <?php
-// navbar.php
 if (session_status() === PHP_SESSION_NONE) session_start();
 $active = $active ?? '';
 function navClass($key, $active)
