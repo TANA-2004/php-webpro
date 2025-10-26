@@ -56,8 +56,52 @@ if (empty($token)) {
 }
 
 // --- [POST] เมื่อผู้ใช้ส่งฟอร์มรหัสผ่านใหม่ ---
+
 if ($_SERVER["REQUEST_METHOD"] === "POST" && $show_form) {
-    // ... (โค้ดส่วน POST สำหรับตรวจสอบและอัปเดตรหัสผ่าน เหมือนเดิม) ...
+    
+    // 1. รับรหัสผ่านใหม่
+    $password = $_POST['password'] ?? '';
+    $confirmPassword = $_POST['confirmPassword'] ?? '';
+    
+    // 2. ตรวจสอบข้อมูล (Validation)
+    if (empty($password) || empty($confirmPassword)) {
+        $errors[] = "กรุณากรอกรหัสผ่านใหม่ทั้งสองช่อง";
+    } elseif (strlen($password) < 6) { // (เพิ่มการตรวจสอบความยาวพื้นฐาน)
+        $errors[] = "รหัสผ่านใหม่ต้องมีอย่างน้อย 6 ตัวอักษร";
+    } elseif ($password !== $confirmPassword) {
+        $errors[] = "รหัสผ่านใหม่และยืนยันรหัสผ่านไม่ตรงกัน";
+    }
+
+    // 3. ถ้าข้อมูลถูกต้อง -> เริ่มอัปเดต
+    if (empty($errors)) {
+        // (เรามี $email และ $token จากส่วน GET อยู่แล้ว)
+        
+        // 3.1 เข้ารหัสรหัสผ่านใหม่
+        $new_hash = password_hash($password, PASSWORD_DEFAULT);
+        
+        // 3.2 อัปเดตรหัสผ่านในตาราง `users` (โดยอ้างอิงจาก $email)
+        $stmt_update = mysqli_prepare($conn, "UPDATE users SET password = ? WHERE email = ?");
+        mysqli_stmt_bind_param($stmt_update, "ss", $new_hash, $email);
+        
+        if (mysqli_stmt_execute($stmt_update)) {
+            // 3.3 [สำคัญ] ลบ Token ที่ใช้แล้วออกจาก `password_resets`
+            $stmt_delete = mysqli_prepare($conn, "DELETE FROM password_resets WHERE token = ?");
+            mysqli_stmt_bind_param($stmt_delete, "s", $token);
+            mysqli_stmt_execute($stmt_delete);
+            mysqli_stmt_close($stmt_delete);
+            
+            // 3.4 ตั้งค่าข้อความสำเร็จ และส่งไปหน้า Login
+            $_SESSION['message'] = "เปลี่ยนรหัสผ่านสำเร็จ! กรุณาเข้าสู่ระบบด้วยรหัสใหม่";
+            $_SESSION['is_success'] = true;
+            header("Location: Signin.php");
+            exit();
+            
+        } else {
+            $errors[] = "เกิดข้อผิดพลาดในการบันทึกรหัสผ่านใหม่";
+        }
+        mysqli_stmt_close($stmt_update);
+    }
+    // (ถ้า $errors ไม่ว่าง, โค้ดจะข้ามไปแสดงผล HTML ซึ่ง $errors จะถูกแสดง)
 }
 
 mysqli_close($conn);
