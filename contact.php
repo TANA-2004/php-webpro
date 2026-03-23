@@ -130,6 +130,7 @@ mysqli_close($conn);
         <a href="#" class="text-blue-600 hover:text-blue-800 text-2xl"><i class="fab fa-facebook"></i></a>
         <a href="#" class="text-pink-500 hover:text-pink-700 text-2xl"><i class="fab fa-instagram"></i></a>
         <a href="#" class="text-green-500 hover:text-green-700 text-2xl"><i class="fab fa-line"></i></a>
+        <a href="https://www.tiktok.com/@mmmmz341" class="text-blue-400 hover:text-blue-600 text-2xl"><i class="fab fa-tiktok"></i></a>
       </div>
     </div>
 
